@@ -1,0 +1,33 @@
+{
+  "name": "fluent-request",
+  "version": "1.0.0",
+  "description": "A fluent interface for HTTP requests in Node.js",
+  "main": "lib/request.js",
+  "scripts": {
+    "test": "istanbul cover --report html node_modules/.bin/_mocha -- -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bakerface/fluent-request.git"
+  },
+  "keywords": [
+    "fluent",
+    "interface",
+    "http",
+    "request"
+  ],
+  "author": "Christopher M. Baker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bakerface/fluent-request/issues"
+  },
+  "homepage": "https://github.com/bakerface/fluent-request",
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "nock": "^1.1.0",
+    "should": "^5.1.0"
+  },
+  "dependencies": {
+    "when": "^3.7.2"
+  }
+}
