@@ -20,6 +20,7 @@
 - [request.withPathSection(index, section)](#requestwithpathsectionindexsection)
 - [request.withQuery(key, value)](#requestwithquerykeyvalue)
 
+### request(options)
 Sends a request with the specified *options*. The *options* may be a string or an object. If *options* is a string, it will be parsed immediately with [url.parse()](https://nodejs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost). If *options* is an object, it should have the following properties:
 
 - **protocol**: The transmission protocol (defaults to ```'http:'```).
