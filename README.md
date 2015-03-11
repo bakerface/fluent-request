@@ -1,17 +1,49 @@
 # fluent-request
 **A fluent interface for HTTP requests in Node.js**
 
-### request.get(options)
-Sends a GET request to the specified endpoint. The *options* parameter is passed to [http.request()](https://nodejs.org/api/http.html#http_http_request_options_callback); therefore, it may be an object or a string to be parsed by [url.parse()](https://nodejs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost). Below is an example of sending a GET request.
+### Table of Contents
+- [request(options)](#requestoptions)
+- [request.del(options)](#requestdeloptions)
+- [request.get(options)](#requestgetoptions)
+- [request.head(options)](#requestheadoptions)
+- [request.merge(options)](#requestmergeoptions)
+- [request.patch(options)](#requestpatchoptions)
+- [request.post(options)](#requestpostoptions)
+- [request.put(options)](#requestputoptions)
+- [request.withContent(content)](#requestwithcontentcontent)
+- [request.withContentType(type)](#requestwithcontenttypetype)
+- [request.withForm(form)](#requestwithformform)
+- [request.withHeader(key, value)](#requestwithheaderkeyvalue)
+- [request.withJSON(json)](#requestwithjsonjson)
+- [request.withMethod(method)](#requestwithmethodmethod)
+- [request.withPath(path)](#requestwithpathpath)
+- [request.withPathSection(index, section)](#requestwithpathsectionindexsection)
+- [request.withQuery(key, value)](#requestwithquerykeyvalue)
+
+Sends a request with the specified *options*. The *options* may be a string or an object. If *options* is a string, it will be parsed immediately with [url.parse()](https://nodejs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost). If *options* is an object, it should have the following properties:
+
+- **protocol**: The transmission protocol (defaults to ```'http:'```).
+- **hostname**: A domain name or IP address of the server (defaults to ```'localhost'```).
+- **port**: The port of the server (defaults to ```80``` for http and ```443``` for https).
+- **method**: The request method (defaults to ```'GET'```).
+- **path**: The request path including the query string (defaults to ```'/'```).
+- **headers**: An object containing the request headers (defaults to ```{}```).
 
 ``` javascript
 var request = require('fluent-request');
 
-request.get('http://somewhere.com')
-  .withPath('/users')
-  .withQuery('page', 1)
-  .withQuery('per_page', 10)
-  .withHeader('User-Agent', 'fluent-request')
+var options = {
+  protocol: 'https:',
+  hostname: 'api.github.com',
+  port: 443,
+  method: 'GET',
+  path: '/repos/bakerface/fluent-request',
+  headers: {
+    'User-Agent': 'bakerface'
+  }
+};
+
+request(options)
   .then(function(response) {
     // the http response object
   })
@@ -20,88 +52,111 @@ request.get('http://somewhere.com')
   });
 ```
 
-The code above will send the following request.
+### request.del(options)
+Sends a DELETE request with the specified *options*. This is a convenience method for ```request(options).withMethod('DELETE')```.
 
-``` http
-GET /users?page=1&per_page=10 HTTP/1.1
-Host: somewhere.com
-User-Agent: fluent-request
+``` javascript
+var request = require('fluent-request');
 
+request.del('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.get(options)
+Sends a GET request with the specified *options*. This is a convenience method for ```request(options).withMethod('GET')```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.get('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.head(options)
+Sends a HEAD request with the specified *options*. This is a convenience method for ```request(options).withMethod('HEAD')```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.head('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.merge(options)
+Sends a MERGE request with the specified *options*. This is a convenience method for ```request(options).withMethod('MERGE')```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.merge('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.patch(options)
+Sends a PATCH request with the specified *options*. This is a convenience method for ```request(options).withMethod('PATCH')```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
 ```
 
 ### request.post(options)
-Sends a POST request to the specified endpoint. The *options* parameter is passed to [http.request()](https://nodejs.org/api/http.html#http_http_request_options_callback); therefore, it may be an object or a string to be parsed by [url.parse()](https://nodejs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost). Below are a few examples of sending a POST request.
-
-#### Without content
-Below is an example of sending a POST request without content.
+Sends a POST request with the specified *options*. This is a convenience method for ```request(options).withMethod('POST')```.
 
 ``` javascript
 var request = require('fluent-request');
 
-request.post('http://somewhere.com')
-  .withPath('/users')
-  .withQuery('name', 'chris')
-  .withQuery('role', 'admin')
-  .withHeader('User-Agent', 'fluent-request')
-  .then(function(response) {
-    // the http response object
-  })
-  .catch(function(reason) {
-    // an error occurred
-  });
-```
-
-The code above will send the following request.
-
-``` http
-POST /users?name=chris&role=admin HTTP/1.1
-Host: somewhere.com
-User-Agent: fluent-request
-
-```
-
-#### With content
-Below is an example of sending a POST request with content.
-
-``` javascript
-var request = require('fluent-request');
-
-request.post('http://somewhere.com')
-  .withPath('/users')
-  .withHeader('User-Agent', 'fluent-request')
-  .withContentType('text/plain')
-  .withContent('chris:admin')
-  .then(function(response) {
-    // the http response object
-  })
-  .catch(function(reason) {
-    // an error occurred
-  });
-```
-
-The code above will send the following request.
-
-``` http
-POST /users HTTP/1.1
-Host: somewhere.com
-Content-Type: text/plain
-User-Agent: fluent-request
-
-chris:admin
-```
-
-#### With JSON content
-Below is an example of sending a POST request with JSON content.
-
-``` javascript
-var request = require('fluent-request');
-
-request.post('http://somewhere.com')
-  .withPath('/users')
-  .withHeader('User-Agent', 'fluent-request')
+request.post('https://api.github.com')
+  .withPath('/user/repos')
+  .withHeader('User-Agent', 'bakerface')
   .withJSON({
-    name: 'chris',
-    role: 'admin'
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
   })
   .then(function(response) {
     // the http response object
@@ -111,29 +166,18 @@ request.post('http://somewhere.com')
   });
 ```
 
-The code above will send the following request.
-
-``` http
-POST /users HTTP/1.1
-Host: somewhere.com
-Content-Type: application/json
-User-Agent: fluent-request
-
-{"name":"chris","role":"admin"}
-```
-
-#### With form content
-Below is an example of sending a POST request with form content.
+### request.put(options)
+Sends a PUT request with the specified *options*. This is a convenience method for ```request(options).withMethod('PUT')```.
 
 ``` javascript
 var request = require('fluent-request');
 
-request.post('http://somewhere.com')
-  .withPath('/users')
-  .withHeader('User-Agent', 'fluent-request')
-  .withForm({
-    name: 'chris',
-    role: 'admin'
+request.put('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
   })
   .then(function(response) {
     // the http response object
@@ -143,13 +187,183 @@ request.post('http://somewhere.com')
   });
 ```
 
-The code above will send the following request.
+### request.withContent(content)
+Sets the content for the HTTP request. This must be UTF8 encoded string. This must be used in combination with [withContentType](#requestwithcontenttypetype).
 
-``` http
-POST /users HTTP/1.1
-Host: somewhere.com
-Content-Type: application/x-www-form-urlencoded
-User-Agent: fluent-request
+``` javascript
+var request = require('fluent-request');
 
-name=chris&role=admin
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withContentType('application/json')
+  .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withContentType(type)
+Sets the ```'Content-Type'``` header for the HTTP request. This must be used in combination with [withContent](#requestwithcontentcontent).
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withContentType('application/json')
+  .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withForm(form)
+Sets the form content for the HTTP request. This is a convenience method for ```request.withContentType('application/x-www-form-urlencoded').withContent(url.encode(form))```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.post('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withForm({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withHeader(key, value)
+Sets the header for the HTTP request. The *key* must be a string. The *value* is transformed to a string with ```toString()```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.get('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withJSON(json)
+Sets the JSON content for the HTTP request. This is a convenience method for ```request.withContentType('application/json').withContent(JSON.stringify(json))```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withMethod(method)
+Sets the method for the HTTP request. This function allows for custom HTTP verbs that are not supplied as a convenience function.
+
+``` javascript
+var request = require('fluent-request');
+
+request('https://api.github.com')
+  .withMethod('PATCH')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withPath(path)
+Sets the path for the HTTP request. This must not include the query string.
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withPathSection(index, section)
+Modifies the path for the HTTP request by changing a section of the path.
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/:repo')
+  .withPathSection(2, 'fluent-request')
+  .withHeader('User-Agent', 'bakerface')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withQuery(key, value)
+Sets the query parameter for the HTTP request. The *key* must be a string. The *value* is transformed to a string with ```toString()```.
+
+``` javascript
+var request = require('fluent-request');
+
+request.get('https://api.github.com')
+  .withPath('/user/repos')
+  .withQuery('page', 1)
+  .withQuery('per_page', 100)
+  .withHeader('User-Agent', 'bakerface')
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
 ```
