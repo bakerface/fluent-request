@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/bakerface/fluent-request.svg)](https://travis-ci.org/bakerface/fluent-request) [![Coverage Status](https://coveralls.io/repos/bakerface/fluent-request/badge.svg)](https://coveralls.io/r/bakerface/fluent-request)
+
 # fluent-request
 **A fluent interface for HTTP requests in Node.js**
 
