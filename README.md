@@ -18,6 +18,7 @@
 - [request.withMethod(method)](#requestwithmethodmethod)
 - [request.withPath(path)](#requestwithpathpath)
 - [request.withPathSection(index, section)](#requestwithpathsectionindexsection)
+- [request.withUserAgent(userAgent)](#requestwithuseragentuseragent)
 - [request.withQuery(key, value)](#requestwithquerykeyvalue)
 
 ### request(options)
@@ -61,7 +62,7 @@ var request = require('fluent-request');
 
 request.del('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .then(function(response) {
     // the http response object
   })
@@ -78,7 +79,7 @@ var request = require('fluent-request');
 
 request.get('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .then(function(response) {
     // the http response object
   })
@@ -95,7 +96,7 @@ var request = require('fluent-request');
 
 request.head('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .then(function(response) {
     // the http response object
   })
@@ -112,7 +113,7 @@ var request = require('fluent-request');
 
 request.merge('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -133,7 +134,7 @@ var request = require('fluent-request');
 
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -154,7 +155,7 @@ var request = require('fluent-request');
 
 request.post('https://api.github.com')
   .withPath('/user/repos')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -175,7 +176,7 @@ var request = require('fluent-request');
 
 request.put('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -196,7 +197,7 @@ var request = require('fluent-request');
 
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withContentType('application/json')
   .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
   .then(function(response) {
@@ -215,7 +216,7 @@ var request = require('fluent-request');
 
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withContentType('application/json')
   .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
   .then(function(response) {
@@ -234,7 +235,7 @@ var request = require('fluent-request');
 
 request.post('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withForm({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -272,7 +273,7 @@ var request = require('fluent-request');
 
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -294,7 +295,7 @@ var request = require('fluent-request');
 request('https://api.github.com')
   .withMethod('PATCH')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -315,7 +316,7 @@ var request = require('fluent-request');
 
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
@@ -337,11 +338,30 @@ var request = require('fluent-request');
 request.patch('https://api.github.com')
   .withPath('/repos/bakerface/:repo')
   .withPathSection(2, 'fluent-request')
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .withJSON({
     name: 'fluent-request',
     description: 'A fluent interface for HTTP requests in Node.js'
   })
+  .then(function(response) {
+    // the http response object
+  })
+  .catch(function(reason) {
+    // an error occurred
+  });
+```
+
+### request.withUserAgent(userAgent)
+Sets the ```'User-Agent'``` header for the HTTP request.
+
+``` javascript
+var request = require('fluent-request');
+
+request.patch('https://api.github.com')
+  .withPath('/repos/bakerface/fluent-request')
+  .withUserAgent('bakerface')
+  .withContentType('application/json')
+  .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
   .then(function(response) {
     // the http response object
   })
@@ -360,7 +380,7 @@ request.get('https://api.github.com')
   .withPath('/user/repos')
   .withQuery('page', 1)
   .withQuery('per_page', 100)
-  .withHeader('User-Agent', 'bakerface')
+  .withUserAgent('bakerface')
   .then(function(response) {
     // the http response object
   })
