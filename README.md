@@ -361,7 +361,10 @@ request.patch('https://api.github.com')
   .withPath('/repos/bakerface/fluent-request')
   .withUserAgent('bakerface')
   .withContentType('application/json')
-  .withContent('{"name":"fluent-request","description":"A fluent interface for HTTP requests in Node.js"}')
+  .withJSON({
+    name: 'fluent-request',
+    description: 'A fluent interface for HTTP requests in Node.js'
+  })
   .then(function(response) {
     // the http response object
   })
